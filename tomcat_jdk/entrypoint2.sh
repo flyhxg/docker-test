@@ -20,3 +20,4 @@ do
 	[ -z "${line_value}" ] && continue
         sed -i "s#$line_name#${line_value}#g" common.properties
 done
+/usr/local/tomcat/bin/startup.sh && tail -f /usr/local/tomcat/logs/catalina.out
