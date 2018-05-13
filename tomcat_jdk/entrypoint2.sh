@@ -3,21 +3,17 @@ set -e
 vars="RDS_DATABASE_HOST_REPLACE
 RDS_DATABASE_USER_REPLACE
 RDS_DATABASE_PASSWD_REPLACE
-REDIS_DATABASE_HOST_REPLACE
-REDIS_DATABASE_PASSWD_REPLACE
-WX_OP_SHIRO_APPKEY_REPLACE
-WX_OP_SHIRO_APPSECRET_REPLACE
-WX_DEALER_SHIRO_APPKEY_REPLACE
-WX_DEALER_SHIRO_APPSECRET_REPLACE
-WECHAT_MAIN_DOMAIN_REPLACE
-CRM_MAIN_DOMAIN_REPLACE"
+REDIS_DATABASE_PASSWD_REPLACE"
 
-
-echo "${vars}" |while read line_name
+echo  "${vars}" |while read line_name
 do
+	if [ "$line_name" != "REDIS_DATABASE_PASSWD_REPLACE"  ];then
+		if [ -z "$line_name" ];then
+   			 echo "You must set the $line_name environment variable"
+   			  exit 1
+  fi
+fi
 	eval line_value="\$${line_name}"
-	echo $line_value
-	[ -z "${line_value}" ] && continue
-        sed -i "s#$line_name#${line_value}#g" common.properties
+        sed -i "s#$line_name#${line_value}#g" /usr/local/tomcat/webapps/ROOT/WEB-INF/classes/common.properties
 done
 /usr/local/tomcat/bin/startup.sh && tail -f /usr/local/tomcat/logs/catalina.out
