@@ -1,0 +1,9 @@
+filebeat.prospectors:
+- input_type: INPUT_TYPE
+  paths:
+    - PATHS
+output.elasticsearch:
+  hosts: ["ES_SERVER"]
+username: "ES_USERNAME"
+password: "ES_PASSWORD"
+index: "INDEX"
